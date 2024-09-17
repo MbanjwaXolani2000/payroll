@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payroll System</title>
+  <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+<body>
+
+  <!-- Header Section -->
+  <header>
+    <div class="logo-container">
+      <img src="https://www.jmpsolutions.co.za/images/logo.png" alt="Company Logo">
+      <h1>Payroll Management System</h1>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Attendance Form -->
+    <section class="attendance-form">
+      <h2>Record Attendance</h2>
+      <form id="attendance-form">
+        <div class="form-group">
+          <label for="employee">Employee:</label>
+          <select id="employee" name="employee">
+            <option value="1">John Doe</option>
+            <option value="2">Jane Smith</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="site">Site:</label>
+          <select id="site" name="site">
+            <option value="siteA">Site A</option>
+            <option value="siteB">Site B</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="date">Date:</label>
+          <input type="date" name="date" required>
+        </div>
+
+        <!-- Normal Hours -->
+        <div class="form-group">
+          <label for="normal_hours">Normal Hours Worked:</label>
+          <input type="number" id="normal_hours" name="normal_hours" required>
+        </div>
+
+        <!-- Sunday Hours -->
+        <div class="form-group">
+          <label for="sunday_hours">Sunday Hours Worked:</label>
+          <input type="number" id="sunday_hours" name="sunday_hours" required>
+        </div>
+
+        <!-- Holiday Hours -->
+        <div class="form-group">
+          <label for="holiday_hours">Holiday Hours Worked:</label>
+          <input type="number" id="holiday_hours" name="holiday_hours" required>
+        </div>
+
+        <!-- Night Shift Hours -->
+        <div class="form-group">
+          <label for="night_shift_hours">Night Shift Hours Worked:</label>
+          <input type="number" id="night_shift_hours" name="night_shift_hours" required>
+        </div>
+
+        <button type="submit">Submit Attendance</button>
+      </form>
+    </section>
+
+     <!-- Payroll Overview -->
+     <section class="payroll-overview">
+      <h2>Payroll Overview</h2>
+      <!-- This table will be dynamically generated from the backend -->
+      <table>
+        <thead>
+          <tr>
+            <th>Employee</th>
+            <th>Site</th>
+            <th>Date</th>
+            <th>Hours Worked</th>
+            <th>Gross Salary</th>
+            <th>Net Salary</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="payroll-table">
+          <tr>
+            <td>John Doe</td>
+            <td>Site A</td>
+            <td>2024-09-15</td>
+            <td>8</td>
+            <td>R200</td>
+            <td>R180</td>
+            <td><button>Generate Payslip</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    // Sample site rates (can be set dynamically)
+    const rates = {
+      siteA: 100, // Rate for Site A
+      siteB: 120, // Rate for Site B
+    };
+
+    // Form submission handling
+    document.getElementById('attendance-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const site = document.getElementById('site').value;
+      const normalHours = Number(document.getElementById('normal_hours').value);
+      const sundayHours = Number(document.getElementById('sunday_hours').value);
+      const holidayHours = Number(document.getElementById('holiday_hours').value);
+      const nightShiftHours = Number(document.getElementById('night_shift_hours').value);
+
+      const rate = rates[site];
+      
+      // Calculate the total payment
+      const totalPayment = (rate * normalHours) 
+                         + (rate * 1.5 * sundayHours) 
+                         + (rate * 2 * holidayHours) 
+                         + (7 * nightShiftHours);
+
+      // For now, just log the total payment, later it can be saved in a backend
+      console.log('Total Payment: ', totalPayment);
+
+      // Update the table (for demo purposes)
+      const table = document.getElementById('payroll-table');
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>Employee Name</td>
+        <td>${site}</td>
+        <td>${new Date().toLocaleDateString()}</td>
+        <td>${normalHours + sundayHours + holidayHours + nightShiftHours}</td>
+        <td>${totalPayment}</td>
+        <td>${totalPayment - 20}</td>
+        <td><button>Generate Payslip</button></td>
+      `;
+      table.appendChild(row);
+    });
+  </script>
+</body>
+</html>
