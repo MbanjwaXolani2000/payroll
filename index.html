@@ -230,12 +230,12 @@ button {
         </thead>
         <tbody id="payroll-table">
           <tr>
-            <td>John Doe</td>
-            <td>Site A</td>
+            <td>E Hayo</td>
+            <td>Sedibeng</td>
             <td>2024-09-15</td>
-            <td>8</td>
-            <td>R200</td>
-            <td>R180</td>
+            <td>0</td>
+            <td>R0</td>
+            <td>R0</td>
             <td><button>Generate Payslip</button></td>
           </tr>
         </tbody>
@@ -276,11 +276,11 @@ button {
       const row = document.createElement('tr');
       row.innerHTML = `
         <td>Employee Name</td>
-        <td>${site}</td>
-        <td>${new Date().toLocaleDateString()}</td>
-        <td>${normalHours + sundayHours + holidayHours + nightShiftHours}</td>
-        <td>${totalPayment}</td>
-        <td>${totalPayment - 20}</td>
+        <td>R{site}</td>
+        <td>R{new Date().toLocaleDateString()}</td>
+        <td>R{normalHours + sundayHours + holidayHours + nightShiftHours}</td>
+        <td>R{totalPayment}</td>
+        <td>R{totalPayment - 20}</td>
         <td><button>Generate Payslip</button></td>
       `;
       table.appendChild(row);
